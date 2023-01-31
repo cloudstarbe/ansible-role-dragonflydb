@@ -1,0 +1,5 @@
+---
+- name: Restart Dragonfly
+  ansible.builtin.service:
+    name: dragonfly
+    state: restarted

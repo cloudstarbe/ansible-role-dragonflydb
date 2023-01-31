@@ -1,0 +1,21 @@
+---
+dragonflydb_version: 0.14.0
+dragonflydb_deb_url: "https://github.com/dragonflydb/dragonfly/releases/download/v{{ dragonflydb_version }}/dragonfly_{{ dragonflydb_version }}_amd64.deb"
+
+dragonflydb_port: 6379
+dragonflydb_bind_interface: 127.0.0.1
+
+# dragonflydb_requirepass: "password"
+dragonflydb_save_schedule: "''"
+dragonflydb_databases: 16
+dragonflydb_cache_mode: "false"
+dragonflydb_maxmemory: "0"
+dragonflydb_dbdir: /var/lib/dragonflydb
+dragonflydb_dbfilename: dump
+dragonflydb_keys_output_limit: 8192
+dragonflydb_hz: 100
+dragonflydb_primary_port_http_enabled: "true"
+
+# dragonflydb_memcache_port: ""
+# dragonflydb_admin_port: 16379
+# dragonflydb_admin_bind: "0.0.0.0"

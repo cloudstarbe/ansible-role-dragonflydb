@@ -1,0 +1,46 @@
+#={{ ansible_managed }}
+--pidfile=/var/run/dragonfly/dragonfly.pid
+--log_dir=/var/log/dragonfly
+--dir=/var/run/dragonfly
+--version_check=true
+
+--port={{ dragonflydb_port }}
+--bind={{ dragonflydb_bind_interface }}
+
+{% if dragonflydb_requirepass is defined and dragonflydb_requirepass | length %}
+--requirepass={{ dragonflydb_requirepass }}
+{% endif %}
+
+--dbnum={{ dragonflydb_databases }}
+
+# glob spec for the UTC time to save a snapshot which matches HH:MM (24h time). default: ""
+# eg: "*:30"
+--save_schedule={{ dragonflydb_save_schedule }}
+--dbfilename={{ dragonflydb_dbfilename }}
+--dir={{ dragonflydb_dbdir }}
+
+--maxmemory={{ dragonflydb_maxmemory }}
+
+--cache_mode={{ dragonflydb_cache_mode }}
+
+# maximum number of returned keys in keys command. Default is 8192. keys is a dangerous command. We truncate its result to avoid blowup in memory when fetching too many keys.
+--keys_output_limit={{ dragonflydb_keys_output_limit }}
+
+# key expiry evaluation frequency. Default is 100. Lower frequency uses less cpu when idle at the expense of slower eviction rate.
+--hz={{ dragonflydb_hz }}
+
+# If true allows accessing http console on main TCP port, default: true
+
+--primary_port_http_enabled={{ dragonflydb_primary_port_http_enabled  }}
+
+{% if dragonflydb_memcache_port is defined and dragonflydb_requirepass | length %}
+# to enable memcached compatible API on this port. Disabled by default.
+--memcache_port={{ dragonflydb_memcache_port }}
+{% endif %}
+
+{% if dragonflydb_admin_port is defined  and dragonflydb_admin_port | length %}
+# If set, would enable admin access to console on the assigned port. This supports both HTTP and RESP protocols. default disabled
+--admin_port={{ dragonflydb_admin_port }}
+# If set, the admin consol TCP connection would be bind the given address. This supports both HTTP and RESP protocols. default any
+--admin_bind={{ dragonflydb_admin_bind }}
+{% endif %}

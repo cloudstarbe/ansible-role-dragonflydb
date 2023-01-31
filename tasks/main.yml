@@ -1,0 +1,27 @@
+---
+- name: Install DragonflyDB Requirements
+  ansible.builtin.apt: 
+    name: libunwind8
+    state: present
+- name: Install redis-cli
+  ansible.builtin.apt: 
+    name: redis-tools
+
+- name: Install DragonflyDB
+  ansible.builtin.apt:
+    deb: "{{ dragonflydb_deb_url }}"
+
+- name: Create DragonflyDB datadir
+  file:
+    path: /var/lib/dragonflydb
+    state: directory
+    mode: 0755
+
+- name: Configure DragonflyDB
+  ansible.builtin.template:
+    src: dragonfly.conf.j2
+    dest: /etc/dragonfly/dragonfly.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart Dragonfly
